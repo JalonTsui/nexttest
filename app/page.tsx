@@ -2,7 +2,7 @@
 import ComList, { ComList2 } from "@/components/app/ComList";
 import ComUseState from "@/components/app/ComUseState";
 import AppHeader from "@/components/share/AppHeader";
-import { useState } from "react";
+import { useState,useEffect,useRef } from "react";
 const Hello = () => {
   return <div>hello world</div>;
 };
@@ -26,18 +26,48 @@ const Condition = ({ isShow }: { isShow: boolean }) => {
   }
 };
 
+/**
+ * @method useEffect
+ * 
+*/
+
 const Com1 = () => {
+  const textList = ['hello world','good week']
+  const [text,setText] = useState(0)
+  const ref = useRef(null)
+  useEffect(()=>{
+    console.log('in useEffect')
+    console.log('useEffect ref===>>>',ref.current)
+    return ()=>console.log('return in useEffect')
+  })
+  console.log('normal ref===>>>',ref.current)
   return (
     <>
-      <div>Com1</div>
+      <div ref={ref}>Com1</div>
+      <button onClick={()=>setText(!!text ? 0 : 1)}>click</button>
+      <p>{textList[text]}</p>
     </>
   );
 };
 
 const Com2 = () => {
+  // const ref = useRef<null|HTMLDivElement>(null)
+  useEffect(()=>{
+    // const getSomething = async ()=>{
+    //   try{
+    //     const result = await fetch('http://127.0.0.1')
+    //     console.log(result)
+    //   }catch(err){
+    //     console.log(err)
+    //   }
+    // }
+    // getSomething()
+  },[])
+  const [isShow,setIsShow] = useState(true)
   return (
     <>
-      <div>Com2</div>
+      {isShow ? <div>Com2</div> : null}
+      <button onClick={()=>setIsShow(!isShow)}>click</button>
     </>
   );
 };
@@ -75,7 +105,7 @@ const Home = () => {
       <Condition isShow={true}></Condition>
       <Condition isShow={false}></Condition>
       <ComList></ComList>
-      <ComList2 />
+      {/* <ComList2 /> */}
       <ComUseState />
     </>
   );
