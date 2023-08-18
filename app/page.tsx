@@ -2,7 +2,9 @@
 import ComList, { ComList2 } from "@/components/app/ComList";
 import ComUseState from "@/components/app/ComUseState";
 import AppHeader from "@/components/share/AppHeader";
-import { useState,useEffect,useRef } from "react";
+import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 const Hello = () => {
   return <div>hello world</div>;
 };
@@ -28,23 +30,32 @@ const Condition = ({ isShow }: { isShow: boolean }) => {
 
 /**
  * @method useEffect
- * 
-*/
+ *
+ */
 
 const Com1 = () => {
-  const textList = ['hello world','good week']
-  const [text,setText] = useState(0)
-  const ref = useRef(null)
-  useEffect(()=>{
-    console.log('in useEffect')
-    console.log('useEffect ref===>>>',ref.current)
-    return ()=>console.log('return in useEffect')
-  })
-  console.log('normal ref===>>>',ref.current)
+  const pathName = usePathname();
+  console.log("pathName===>>>", pathName);
+  const textList = ["hello world", "good week"];
+  const [text, setText] = useState(0);
+  const ref = useRef(null);
+  useEffect(() => {
+    console.log("in useEffect");
+    console.log("useEffect ref===>>>", ref.current);
+    return () => console.log("return in useEffect");
+  });
+  console.log("normal ref===>>>", ref.current);
   return (
     <>
       <div ref={ref}>Com1</div>
-      <button onClick={()=>setText(!!text ? 0 : 1)}>click</button>
+      <Link href={"/test"}>to test</Link>
+      <br />
+      <br />
+      <Link href="/test#hello">to hello world top</Link>
+      <br></br>
+      <button onClick={() => setText(!!text ? 0 : 1)}>click</button>
+      <div style={{ height: "1000px" }}></div>
+      <div id="settings">hello world</div>
       <p>{textList[text]}</p>
     </>
   );
@@ -52,7 +63,7 @@ const Com1 = () => {
 
 const Com2 = () => {
   // const ref = useRef<null|HTMLDivElement>(null)
-  useEffect(()=>{
+  useEffect(() => {
     // const getSomething = async ()=>{
     //   try{
     //     const result = await fetch('http://127.0.0.1')
@@ -62,12 +73,12 @@ const Com2 = () => {
     //   }
     // }
     // getSomething()
-  },[])
-  const [isShow,setIsShow] = useState(true)
+  }, []);
+  const [isShow, setIsShow] = useState(true);
   return (
     <>
       {isShow ? <div>Com2</div> : null}
-      <button onClick={()=>setIsShow(!isShow)}>click</button>
+      <button onClick={() => setIsShow(!isShow)}>click</button>
     </>
   );
 };
@@ -94,6 +105,7 @@ const Home = () => {
       <div style={{ width: "100%", height: "1000px", border: "1px solid red" }}>
         {comModule()}
       </div>
+      <Link href={"/test"}>to test</Link>
       <Hello />
       <Hello />
       <Hello />
