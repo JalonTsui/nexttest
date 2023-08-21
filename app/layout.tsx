@@ -1,4 +1,6 @@
+"use client";
 import "./globals.css";
+import { getTest } from "@/service/test";
 
 export const metadata = {
   title: "Next.js",
@@ -10,12 +12,22 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  async function test() {
+    const result = await getTest();
+    console.log(result);
+  }
   return (
-    <html lang="en">
-      <body>
-        <div className="md:flex container mx-auto px-4">
-          <div className="grow">123</div>
-          <div className="grow-[4]">{children}</div>
+    <html lang="en" className="h-full">
+      <body className="h-full">
+        <div className="flex w-full h-full relative">
+          <div className="w-60 absolute left-[-15rem] lg:left-0 transition-all duration-500 bg-zinc-400 h-full">
+            <button className="w-full" onClick={test}>
+              click
+            </button>
+          </div>
+          <div className="grow absolute left-0 f-full lg:left-[15rem] duration-500 transition-all">
+            {children}
+          </div>
         </div>
         {/* <div className="md:columns-4 lg:columns-6 columns-2">
           <div className="w-full">123</div>

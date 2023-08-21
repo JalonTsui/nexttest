@@ -12,6 +12,9 @@ const config: Config = {
         2: "2",
         4: "4",
       },
+      translate: {
+        d100: "-100%",
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
